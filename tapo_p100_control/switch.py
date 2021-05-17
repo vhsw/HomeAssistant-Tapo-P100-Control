@@ -1,89 +1,73 @@
-"""Tapo L1510 Bulb Home Assistant Intergration"""
+"""Tapo P100 Home Assistant Intergration"""
 import logging
-
-from PyP100 import PyP100
-import voluptuous as vol
+from dataclasses import asdict
 
 import homeassistant.helpers.config_validation as cv
+import voluptuous as vol
+from homeassistant.components.switch import PLATFORM_SCHEMA, SwitchEntity
+from homeassistant.const import CONF_EMAIL, CONF_IP_ADDRESS, CONF_PASSWORD
 
-from homeassistant.components.switch import (
-    SwitchEntity,
-    PLATFORM_SCHEMA,
-    )
-from homeassistant.const import CONF_IP_ADDRESS, CONF_EMAIL, CONF_PASSWORD
-
-import json
+from .device_info import DeviceInfo
+from .p100 import P100
 
 # Validation of the user's configuration
-PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
-    vol.Required(CONF_IP_ADDRESS): cv.string,
-    vol.Required(CONF_EMAIL): cv.string,
-    vol.Required(CONF_PASSWORD): cv.string,
-})
+PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
+    {
+        vol.Required(CONF_IP_ADDRESS): cv.string,
+        vol.Required(CONF_EMAIL): cv.string,
+        vol.Required(CONF_PASSWORD): cv.string,
+    }
+)
 
 _LOGGER = logging.getLogger(__name__)
+
 
 def setup_platform(hass, config, add_entities, discovery_info=None):
     """Set up the Awesome Light platform."""
     # Assign configuration variables.
     # The configuration check takes care they are present.
-    ipAddress = config[CONF_IP_ADDRESS]
+    ip_address = config[CONF_IP_ADDRESS]
     email = config[CONF_EMAIL]
     password = config.get(CONF_PASSWORD)
 
     # Setup connection with devices/cloud
-    p100 = PyP100.P100(ipAddress, email, password)
+    add_entities([P100Plug(ip_address, email, password)])
 
-    try:
-        p100.handshake()
-        p100.login()
-    except:
-        _LOGGER.error("Could not connect to plug. Possibly invalid credentials")
-
-    add_entities([P100Plug(p100)])
 
 class P100Plug(SwitchEntity):
     """Representation of a P100 Plug"""
 
-    def __init__(self, p100):
-        self._p100 = p100
-        self._is_on = False
-
-        self.update()
-
-    @property
-    def name(self):
-        """Name of the device."""
-        return self._name
-
-    @property
-    def is_on(self):
-        """Name of the device."""
-        return self._is_on
+    def __init__(self, ip_address, email, password):
+        self.p100 = P100(ip_address, email, password)
+        self._device_info = DeviceInfo()
 
     def turn_on(self, **kwargs) -> None:
         """Turn Plug On"""
-        self._p100.handshake()
-        self._p100.login()
-
-        self._p100.turnOn()
-
-        self._is_on = True
+        self.p100.turn_on()
 
     def turn_off(self, **kwargs):
         """Turn Plug Off"""
-        self._p100.handshake()
-        self._p100.login()
-        self._p100.turnOff()
-
-        self._is_on = False
+        self.p100.turn_off()
 
     def update(self):
-        self._p100.handshake()
-        self._p100.login()
+        self._device_info = self.p100.device_info()
 
-        self._name = self._p100.getDeviceName()
- 
-        data = json.loads(self._p100.getDeviceInfo())
+    @property
+    def is_on(self):
+        return self._device_info.device_on
 
-        self._is_on = data["result"]["device_on"]
+    @property
+    def name(self):
+        return self._device_info.nickname
+
+    @property
+    def device_info(self):
+        return asdict(self._device_info)
+
+    @property
+    def device_class(self):
+        return "outlet"
+
+    @property
+    def unique_id(self):
+        return self._device_info.device_id

@@ -1,10 +1,17 @@
 {
   "domain": "tapo_p100_control",
   "name": "Tapo P100 Plug Control",
-  "documentation": "https://github.com/fishbigger/HomeAssistant-Tapo-P100-Control",
-  "issue_tracker": "https://github.com/fishbigger/HomeAssistant-Tapo-P100-Control/issues",
+  "documentation": "https://github.com/vhsw/HomeAssistant-Tapo-P100-Control",
+  "issue_tracker": "https://github.com/vhsw/HomeAssistant-Tapo-P100-Control/issues",
   "dependencies": [],
-  "codeowners": ["@fishbigger", "@K4CZP3R"],
-  "requirements": ["PyP100==0.0.11"],
-  "version": "0.0.0"
+  "codeowners": [
+    "@fishbigger",
+    "@K4CZP3R",
+    "@vhsw"
+  ],
+  "requirements": [
+    "pycryptodome==3.10.1",
+    "pkcs7==0.1.2"
+  ],
+  "version": "0.2.0"
 }
