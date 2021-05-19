@@ -1,4 +1,4 @@
-# Home Assistant Tapo P100 Control
+# Home Assistant Tapo P100 Integration
 
 A custom integration for Home Assistant to control the Tp-Link Tapo P100 smart plugs
 
