@@ -2,8 +2,8 @@
   "domain": "tapo_p100",
   "name": "TP-Link Tapo P100 Smart Plug",
   "config_flow": true,
-  "documentation": "https://github.com/vhsw/HomeAssistant-Tapo-P100-Control",
-  "issue_tracker": "https://github.com/vhsw/HomeAssistant-Tapo-P100-Control/issues",
+  "documentation": "https://github.com/vhsw/Tapo-P100",
+  "issue_tracker": "https://github.com/vhsw/Tapo-P100/issues",
   "dependencies": [],
   "codeowners": [
     "@fishbigger",
