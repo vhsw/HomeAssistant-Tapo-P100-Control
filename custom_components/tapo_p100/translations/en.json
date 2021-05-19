@@ -1,0 +1,19 @@
+{
+  "config": {
+    "abort": {},
+    "error": {
+      "invalid_auth": "Invalid authentication"
+    },
+    "step": {
+      "user": {
+        "title": "Configure Tapo P100",
+        "description": "Do you want to start set up?",
+        "data": {
+          "ip_address": "IP Address",
+          "email": "Email",
+          "password": "Password"
+        }
+      }
+    }
+  }
+}

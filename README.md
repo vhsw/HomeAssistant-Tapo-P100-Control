@@ -4,15 +4,7 @@ A custom integration for Home Assistant to control the Tp-Link Tapo P100 smart p
 
 ## Installation
 
-To install the Tapo P100 integration copy the `tapo_p100_control` folder into the `custom_components` folder on your home assistant instance then these lines should be added to your `configuration.yaml` file.
-
-```yaml
-switch:
-  platform: tapo_p100_control
-  ip_address: 192.168.x.x
-  email: email@gmail.com
-  password: Password123
-```
+To install the Tapo P100 integration copy the `tapo_p100` folder into the `custom_components` folder on your home assistant
 
 ## Contributing
 
@@ -20,8 +12,8 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ## Upcoming Features
 
-- UI setup integration
 - Uploading to HACS
+- Control for the LED indicator
 
 ## Contributors
 

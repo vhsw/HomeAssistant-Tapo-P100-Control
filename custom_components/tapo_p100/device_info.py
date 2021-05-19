@@ -1,8 +1,11 @@
+"""Device info wrapper module"""
 from dataclasses import dataclass
 
 
 @dataclass
-class DeviceInfo:
+class DeviceInfo:  # pylint: disable=too-many-instance-attributes
+    """Device info wrapper"""
+
     device_id: str = ""
     fw_ver: str = ""
     hw_ver: str = ""
@@ -22,7 +25,7 @@ class DeviceInfo:
     longitude: int = 0
     latitude: int = 0
     has_set_location_info: bool = False
-    ip: str = ""
+    ip: str = ""  # pylint: disable=invalid-name
     ssid: str = ""
     signal_level: int = 0
     rssi: int = 0

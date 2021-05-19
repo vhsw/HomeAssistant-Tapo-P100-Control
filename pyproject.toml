@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "homeassistant-tapo-p100-control-1"
-version = "0.1.0"
+name = "tapo_p100"
+version = "0.3.0"
 description = ""
 authors = ["Your Name <you@example.com>"]
 license = "MIT"
@@ -9,6 +9,7 @@ license = "MIT"
 python = "^3.8"
 pycryptodome = "^3.10.1"
 pkcs7 = "^0.1.2"
+aiohttp = "^3.7.4"
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.8.2"

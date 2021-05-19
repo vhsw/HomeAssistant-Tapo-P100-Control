@@ -1,6 +1,7 @@
 {
-  "domain": "tapo_p100_control",
-  "name": "Tapo P100 Plug Control",
+  "domain": "tapo_p100",
+  "name": "TP-Link Tapo P100 Smart Plug",
+  "config_flow": true,
   "documentation": "https://github.com/vhsw/HomeAssistant-Tapo-P100-Control",
   "issue_tracker": "https://github.com/vhsw/HomeAssistant-Tapo-P100-Control/issues",
   "dependencies": [],
@@ -13,5 +14,6 @@
     "pycryptodome==3.10.1",
     "pkcs7==0.1.2"
   ],
-  "version": "0.2.0"
+  "version": "0.3.0",
+  "iot_class": "local_polling"
 }

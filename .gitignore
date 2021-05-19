@@ -1,8 +1,22 @@
-# Created by https://www.toptal.com/developers/gitignore/api/osx,linux,python,windows,pycharm,visualstudiocode,dotenv
-# Edit at https://www.toptal.com/developers/gitignore?templates=osx,linux,python,windows,pycharm,visualstudiocode,dotenv
+# Created by https://www.toptal.com/developers/gitignore/api/osx,linux,python,windows,pycharm,visualstudiocode,dotenv,jupyternotebooks
+# Edit at https://www.toptal.com/developers/gitignore?templates=osx,linux,python,windows,pycharm,visualstudiocode,dotenv,jupyternotebooks
 
 ### dotenv ###
 .env
+
+### JupyterNotebooks ###
+# gitignore template for Jupyter Notebooks
+# website: http://jupyter.org/
+
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# IPython
+profile_default/
+ipython_config.py
+
+# Remove previous ipynb_checkpoints
+#   git rm -r .ipynb_checkpoints/
 
 ### Linux ###
 *~
@@ -228,11 +242,8 @@ doc/_build/
 target/
 
 # Jupyter Notebook
-.ipynb_checkpoints
 
 # IPython
-profile_default/
-ipython_config.py
 
 # pyenv
 .python-version
@@ -336,4 +347,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/osx,linux,python,windows,pycharm,visualstudiocode,dotenv
+# End of https://www.toptal.com/developers/gitignore/api/osx,linux,python,windows,pycharm,visualstudiocode,dotenv,jupyternotebooks
