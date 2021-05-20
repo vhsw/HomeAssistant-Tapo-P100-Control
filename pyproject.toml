@@ -1,9 +1,9 @@
 [tool.poetry]
 name = "tapo_p100"
-version = "0.3.0"
-description = ""
-authors = ["Your Name <you@example.com>"]
+description = "Tapo P100 smart plug integration for Home Assistant"
+authors = ["K4CZP3R", "Extreeeme", "vhsw"]
 license = "MIT"
+version = ""
 
 [tool.poetry.dependencies]
 python = "^3.8"
