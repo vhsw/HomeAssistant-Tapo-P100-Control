@@ -3,7 +3,7 @@
 import binascii
 import json
 import socket
-from random import randbytes
+from random import randint
 
 BROADCAST = "255.255.255.255"
 
@@ -36,7 +36,7 @@ def build_message():
 
     header = bytes.fromhex("0200000101e51100")
     magic_const = 0x5A6B7C8D .to_bytes(4, "big")
-    random = randbytes(4)
+    random = randint(1, ((1 << 32) - 1)).to_bytes(4, "big")
     request = header + random + magic_const
     crc = binascii.crc32(request).to_bytes(4, "big")
     return request[:12] + crc + request[16:]
