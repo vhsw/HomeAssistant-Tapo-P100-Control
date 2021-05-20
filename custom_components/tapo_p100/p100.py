@@ -3,6 +3,7 @@ import asyncio
 import base64
 import hashlib
 import json
+import logging
 import time
 from base64 import b64decode
 from typing import Optional, Union
@@ -14,6 +15,8 @@ from Crypto.Cipher import AES, PKCS1_v1_5
 from Crypto.PublicKey import RSA
 
 from .device_info import DeviceInfo
+
+_LOGGER = logging.getLogger(__name__)
 
 
 class P100:
@@ -45,9 +48,6 @@ class P100:
         """Send `turn off` request to device"""
         await self.send_encrypted_request("set_device_info", {"device_on": False})
 
-    # def turn_off_led(self):
-    #     self.send_encrypted_request("set_led_info", {"led_status": False})
-
     async def device_info(self):
         """Request `DeviceInfo` from device"""
         info = await self.send_encrypted_request("get_device_info")
@@ -55,11 +55,24 @@ class P100:
         info["ssid"] = b64decode(info["ssid"]).decode("utf-8")
         return DeviceInfo(**info)
 
+    async def turn_on_led(self):
+        """Send `turn on led` request to device"""
+        await self.send_encrypted_request("set_led_info", {"led_rule": "always"})
+
+    async def turn_off_led(self):
+        """Send `turn off led` request to device"""
+        await self.send_encrypted_request("set_led_info", {"led_rule": "never"})
+
+    async def device_led_info(self):
+        """Request led info from device"""
+        return await self.send_encrypted_request("get_led_info")
+
     def send_encrypted_request(self, method: str, params=None):
         """Send raw `securePassthrough` request to device"""
         try:
             return self._send_encrypted_request(method, params)
-        except ValueError:
+        except ValueError as exception:
+            _LOGGER.info(f"Got {exception=!r}, trying handshake again")
             self.handshake()
             return self._send_encrypted_request(method, params)
 
@@ -86,7 +99,8 @@ class P100:
             },
         }
         query_params = {"token": self.token} if self.token else None
-
+        # the plug may be unavailable for couple of ms after discovery
+        # add some delay if you facing server disconnect errors
         async with self.session.post(url, json=data, params=query_params) as response:
             self.set_cookies(response)
             response_data = await response.json()
@@ -122,7 +136,7 @@ class P100:
         This method calls `login_device` automatically.
         """
         self.reset_session()
-        public_key = self.rsa_key.public_key().export_key("PEM").decode("utf-8")
+        public_key = self.rsa_key.public_key().export_key().decode()
         result = await self.send_request("handshake", {"key": public_key})
         encrypted_key = b64decode(result["key"].encode("utf-8"))
         cipher = PKCS1_v1_5.new(self.rsa_key)
