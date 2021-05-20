@@ -24,7 +24,10 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore
 
     async def async_step_user(self, user_input=None):
         """Handle the initial step."""
-        ip_address = discover()["ip"]
+        try:
+            ip_address = discover()["ip"]
+        except TimeoutError:
+            ip_address = ""
         schema = vol.Schema(
             {
                 vol.Required(CONF_IP_ADDRESS, default=ip_address): str,
