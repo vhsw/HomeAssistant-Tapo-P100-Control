@@ -1,9 +1,9 @@
 [tool.poetry]
-name = "tapo_p100"
+name = "tapo-p100"
 description = "Tapo P100 smart plug integration for Home Assistant"
 authors = ["K4CZP3R", "Extreeeme", "vhsw"]
 license = "MIT"
-version = ""
+version = "0.3.3"
 
 [tool.poetry.dependencies]
 python = "^3.8"
