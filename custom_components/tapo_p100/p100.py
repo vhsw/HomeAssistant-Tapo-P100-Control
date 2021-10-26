@@ -51,6 +51,7 @@ class P100:
     async def device_info(self):
         """Request `DeviceInfo` from device"""
         info = await self.send_encrypted_request("get_device_info")
+        _LOGGER.debug(info)
         info["nickname"] = b64decode(info["nickname"]).decode("utf-8")
         info["ssid"] = b64decode(info["ssid"]).decode("utf-8")
         return DeviceInfo(**info)

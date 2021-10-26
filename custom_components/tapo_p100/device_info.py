@@ -32,3 +32,4 @@ class DeviceInfo:  # pylint: disable=too-many-instance-attributes
     region: str = ""
     time_diff: int = 0
     lang: str = "en_EN"
+    default_states: str = ""
